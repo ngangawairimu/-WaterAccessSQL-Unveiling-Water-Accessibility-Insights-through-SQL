@@ -393,18 +393,12 @@ OR (type_of_water_source = 'shared_tap' AND time_in_queue >=30 )
 
 -- MCQ question 1
 -- How many UV filters do we have to install in total?
-SELECT
-s.type_of_water_source,
-biological
-FROM
-water_source AS s
-join
-well_pollution
-ON
-well_pollution.source_id = s.source_id
-WHERE type_of_water_source = 'well'
-
-;
+SELECT COUNT(*) AS ro_filters_needed
+FROM water_source AS s
+JOIN well_pollution AS wp
+  ON wp.source_id = s.source_id
+WHERE s.type_of_water_source = 'well'
+  AND wp.chemical = 'yes';  -- Adjust column name/value if needed
 
 -- QUESTION 2
 -- Which province should we send drilling equipment to first?
